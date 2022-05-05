@@ -3,3 +3,21 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  input(type="range" name="limitInput" id="limitInputBox" min="1" max="10" value="1" onchange="updateValue(this.value);")
+  input(type="text" name="searchBox" id="searchInputBox" placeholder="search...")
+  button(onclick='get_acronyms()' id="getAcronymButton") get 1 acronym 
+
+  script.
+    function updateValue(value){
+      if(value == 1){
+        document.getElementById("getAcronymButton").innerText = `get ${value} acronym`;
+      }else{
+        document.getElementById("getAcronymButton").innerText = `get ${value} acronyms`;
+      }
+    }
+    
+    function get_acronyms(){
+      var limit = document.getElementById("limitInputBox").value;
+      var searchStr = document.getElementById("searchInputBox").value;
+      window.location.href = `/acronym?page=1&limit=${limit}&search=:${searchStr}`;
+    }
